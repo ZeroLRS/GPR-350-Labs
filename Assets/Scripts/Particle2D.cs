@@ -28,7 +28,6 @@ public class Particle2D : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
     }
     
     // FixedUpdate is called at a regular interval
@@ -43,7 +42,8 @@ public class Particle2D : MonoBehaviour
         }
         else if (updateMethod == UpdateMethod.KINEMATIC)
         {
-
+            UpdatePositionKinematic(Time.fixedDeltaTime);
+            UpdateRotationKinematic(Time.fixedDeltaTime);
         }
         // If something went wrong and we have an invalid UpdateMethod, error and return
         else
@@ -61,8 +61,7 @@ public class Particle2D : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, rotation);
 
         // Step 4
-        acceleration.y = -Mathf.Sin(Time.fixedTime);
-        angularAcceleration = -Mathf.Sin(Time.fixedTime) * 180;
+        //acceleration.y = -Mathf.Sin(Time.fixedTime - spawnTime);
     }
 
     // Step 2
