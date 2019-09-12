@@ -138,19 +138,24 @@ public class Particle2D : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Update the particle's acceleration based on current forces.
     /// </summary>
-    private void UpdateForce()
+    private void UpdateAcceleration()
     {
-
+        // F = ma
+        // a = f / m
+        // a = 1 / m * f
+        // a = .1 * m * f
+        acceleration = (0.1f * mass) * force;
+        force = Vector2.zero;
     }
 
     /// <summary>
-    /// 
+    /// Apply a new force to the particle.
     /// </summary>
     /// <param name="newForce"> The force to add to the particle's current force. </param>
     public void ApplyForce(Vector2 newForce)
     {
-
+        force += newForce;
     }
 }
