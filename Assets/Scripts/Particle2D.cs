@@ -12,6 +12,11 @@ public class Particle2D : MonoBehaviour
     public Vector2 velocity;
     public Vector2 acceleration;
 
+    /// <summary> The mass of the particle. </summary>
+    public float mass;
+    /// <summary> The total sum of forces acting on the object. </summary>
+    public Vector2 force;
+
     /// <summary>
     /// The rotation, angular velocity, and angular acceleration of our particle.
     /// These control the rotation of the particle during the update.
@@ -69,7 +74,7 @@ public class Particle2D : MonoBehaviour
     /// Update the particle's position according to the explicit Euler function.
     /// </summary>
     /// <param name="deltaTime">The time since the last update.</param>
-    public void UpdatePositionEulerExplicit(float deltaTime)
+    private void UpdatePositionEulerExplicit(float deltaTime)
     {
         // x(t+dt) = x(t) + v(t)dt
         // Euler's method
@@ -82,7 +87,7 @@ public class Particle2D : MonoBehaviour
     /// Update the particle's position according to the kinematic formula.
     /// </summary>
     /// <param name="deltaTime">The time since the last update.</param>
-    public void UpdatePositionKinematic(float deltaTime)
+    private void UpdatePositionKinematic(float deltaTime)
     {
         // x(t+dt) = x(t) + v(t) dt + 1/2 a(t) dt^2
         position += velocity * deltaTime + .5f * acceleration * deltaTime * deltaTime;
@@ -92,7 +97,7 @@ public class Particle2D : MonoBehaviour
     /// Update the particle's velocity according to the explicit Euler function.
     /// </summary>
     /// <param name="deltaTime">The time since the last update.</param>
-    public void UpdateVelocityEulerExplicit(float deltaTime)
+    private void UpdateVelocityEulerExplicit(float deltaTime)
     {
         // v(t+dt) = v(t) + a(t)dt
         velocity += acceleration * deltaTime;
@@ -103,7 +108,7 @@ public class Particle2D : MonoBehaviour
     /// Update the particle's rotation according to the explicit Euler function.
     /// </summary>
     /// <param name="deltaTime">The time since the last update.</param>
-    public void UpdateRotationEulerExplicit(float deltaTime)
+    private void UpdateRotationEulerExplicit(float deltaTime)
     {
         // x(t+dt) = x(t) + v(t)dt
         // Euler's method
@@ -116,7 +121,7 @@ public class Particle2D : MonoBehaviour
     /// Update the particle's rotation according to the kinematic formula.
     /// </summary>
     /// <param name="deltaTime">The time since the last update.</param>
-    public void UpdateRotationKinematic(float deltaTime)
+    private void UpdateRotationKinematic(float deltaTime)
     {
         // x(t+dt) = x(t) + v(t) dt + 1/2 a(t) dt^2
         rotation += angularVelocity * deltaTime + .5f * angularAcceleration * deltaTime * deltaTime;
@@ -126,9 +131,26 @@ public class Particle2D : MonoBehaviour
     /// Update the particle's angular velocity according to the explicit Euler function.
     /// </summary>
     /// <param name="deltaTime">The time since the last update.</param>
-    public void UpdateAngularVelocityEulerExplicit(float deltaTime)
+    private void UpdateAngularVelocityEulerExplicit(float deltaTime)
     {
         // v(t+dt) = v(t) + a(t)dt
         angularVelocity += angularAcceleration * deltaTime;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void UpdateForce()
+    {
+
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="newForce"> The force to add to the particle's current force. </param>
+    public void ApplyForce(Vector2 newForce)
+    {
+
     }
 }
