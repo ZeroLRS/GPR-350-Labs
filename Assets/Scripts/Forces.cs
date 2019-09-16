@@ -1,15 +1,6 @@
-﻿using System.Collections
-	{
-		return Vector2.zero;
-	}
-using System.Collections.Generic
-	{
-		return Vector2.zero;
-	}
-using UnityEngine
-	{
-		return Vector2.zero;
-	}
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class Forces
 {
@@ -21,44 +12,51 @@ public class Forces
         return GenerateForce_gravity(worldUp, gravity, particleMass);
     }
 
+    /// <summary> f_gravity = mg </summary> 
     public static Vector2 GenerateForce_gravity(Vector2 worldUp, float gravity, float particleMass)
     {
         return worldUp * gravity * particleMass;
 	}
-
-    // f_normal = proj(f_gravity, surfaceNormal_unit)
+    /// <summary> f_normal = proj(f_gravity, surfaceNormal_unit) </summary> 
     public static Vector2 GenerateForce_normal(Vector2 f_gravity, Vector2 surfaceNormal_unit)
 	{
-		return Vector2.zero;
-	}
+        // Unity has projection for V3s, but not V2s, so we convert them
+        Vector3 f_gravity3 = f_gravity;
+        Vector3 surfaceNormal_unit3 = surfaceNormal_unit;
 
-    // f_sliding = f_gravity + f_normal
+        // Run the projection
+        Vector3 projection = Vector3.Project(f_gravity3, surfaceNormal_unit);
+
+        return new Vector2(projection.x, projection.y);
+	}
+    /// <summary> f_sliding = f_gravity + f_normal </summary> 
     Vector2 GenerateForce_sliding(Vector2 f_gravity, Vector2 f_normal)
 	{
-		return Vector2.zero;
+        return f_gravity + f_normal;
 	}
-
-    // f_friction_s = -f_opposing if less than max, else -coeff*f_normal (max amount is coeff*|f_normal|)
+    /// <summary> f_friction_s = -f_opposing if less than max, else -coeff*f_normal (max amount is coeff*|f_normal|) </summary> 
     Vector2 GenerateForce_friction_static(Vector2 f_normal, Vector2 f_opposing, float frictionCoefficient_static)
 	{
+        Vector2 max = frictionCoefficient_static * f_normal;
+        
 		return Vector2.zero;
 	}
-
-    // f_friction_k = -coeff*|f_normal| * unit(vel)
+    /// <summary> f_friction_k = -coeff*|f_normal| * unit(vel) </summary> 
     Vector2 GenerateForce_friction_kinetic(Vector2 f_normal, Vector2 particleVelocity, float frictionCoefficient_kinetic)
 	{
 		return Vector2.zero;
 	}
-
-    // f_drag = (p * u^2 * area * coeff)/2
+    /// <summary> f_drag = (p * u^2 * area * coeff)/2 </summary> 
     Vector2 GenerateForce_drag(Vector2 particleVelocity, Vector2 fluidVelocity, float fluidDensity, float objectArea_crossSection, float objectDragCoefficient)
 	{
 		return Vector2.zero;
 	}
-
-    // f_spring = -coeff*(spring length - spring resting length)
+    /// <summary> f_spring = -coeff*(spring length - spring resting length) </summary> 
     Vector2 GenerateForce_spring(Vector2 particlePosition, Vector2 anchorPosition, float springRestingLength, float springStiffnessCoefficient)
 	{
-		return Vector2.zero;
+        float springLength = Vector2.Distance(particlePosition, anchorPosition);
+        float forceAmount = -springStiffnessCoefficient * (springLength - springRestingLength);
+
+        return Vector2.zero;
 	}
 }
