@@ -39,7 +39,8 @@ public static class Forces
     // ****TODO
     public static Vector2 GenerateForce_friction_static(Vector2 f_normal, Vector2 f_opposing, float frictionCoefficient_static)
 	{
-        Vector2 max = frictionCoefficient_static * f_normal;
+        Vector2 f_normal_abs = new Vector2(Mathf.Abs(f_normal.x), Mathf.Abs(f_normal.y));
+        Vector2 max = frictionCoefficient_static * f_normal_abs;
         
 		return Vector2.zero;
 	}
@@ -54,7 +55,9 @@ public static class Forces
     // ****TODO
     public static Vector2 GenerateForce_drag(Vector2 particleVelocity, Vector2 fluidVelocity, float fluidDensity, float objectArea_crossSection, float objectDragCoefficient)
 	{
-		return Vector2.zero;
+        Vector2 drag = (particleVelocity * fluidVelocity * fluidVelocity * objectArea_crossSection * objectDragCoefficient) * .5f;
+
+        return Vector2.zero;
 	}
     /// <summary> f_spring = -coeff*(spring length - spring resting length) </summary> 
     // ****TODO
