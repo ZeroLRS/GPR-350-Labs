@@ -38,7 +38,8 @@ public class Particle2D : MonoBehaviour
     // FixedUpdate is called at a regular interval
     void FixedUpdate()
     {
-        // Step 3
+        UpdateAcceleration();
+
         // Update the particle's position based on which method has been selected
         if (updateMethod == UpdateMethod.EXPLICIT_EULER)
         {
@@ -64,9 +65,6 @@ public class Particle2D : MonoBehaviour
         // Update the actual object's transform with our new values
         transform.position = position;
         transform.rotation = Quaternion.Euler(0, 0, rotation);
-
-        // Step 4
-        //acceleration.y = -Mathf.Sin(Time.fixedTime - spawnTime);
     }
 
     // Step 2
