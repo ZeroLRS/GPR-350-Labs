@@ -85,7 +85,7 @@ public class ForceDemo : MonoBehaviour
                 1.0f);
         }
 
-        Debug.Log(newForce);
+        Debug.Log("Force Applied: " + newForce.ToString("F4"));
         particle.ApplyForce(newForce);
     }
 }
