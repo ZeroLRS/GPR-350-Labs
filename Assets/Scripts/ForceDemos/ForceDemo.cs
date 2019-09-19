@@ -80,7 +80,7 @@ public class ForceDemo : MonoBehaviour
         }
         else if (demo == ForceDemos.STATIC_FRICTION)
         {
-            newForce = Forces.GenerateForce_friction_static(new Vector2(-.3f, 0.0f),
+            newForce = Forces.GenerateForce_friction_static(new Vector2(.3f, 0.0f),
                 particle.velocity,
                 1.0f);
         }

@@ -154,7 +154,7 @@ MonoBehaviour:
   ramp: {fileID: 1536347208}
   shallowRamp: {fileID: 1805264800}
   springAnchor: {fileID: 1524696239}
-  demo: 3
+  demo: 2
 --- !u!4 &388450145
 Transform:
   m_ObjectHideFlags: 0
@@ -336,7 +336,7 @@ PrefabInstance:
     - target: {fileID: 1872463204095781842, guid: e9f210c5cd421584bbe8dd1fa4b9e6ea,
         type: 3}
       propertyPath: velocity.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9f210c5cd421584bbe8dd1fa4b9e6ea, type: 3}
