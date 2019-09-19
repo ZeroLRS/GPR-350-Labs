@@ -66,7 +66,7 @@ public static class Forces
     /// <summary> f_drag = (p * u^2 * area * coeff)/2 </summary>
     public static Vector2 GenerateForce_drag(Vector2 particleVelocity, Vector2 fluidVelocity, float fluidDensity, float objectArea_crossSection, float objectDragCoefficient)
 	{
-        Vector2 dragAmount = (particleVelocity * fluidDensity * fluidDensity * objectArea_crossSection * objectDragCoefficient) * .5f;
+        Vector2 dragAmount = (particleVelocity * particleVelocity.magnitude * fluidDensity * objectArea_crossSection * objectDragCoefficient) * .5f;
 
         return fluidVelocity * dragAmount;
 	}
