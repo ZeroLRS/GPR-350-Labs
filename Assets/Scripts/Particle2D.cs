@@ -2,8 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Shape
+{
+    ROD = 0,
+    DISK,
+    THIN_CYLINDER,
+    SOLID_CYLINDER,
+    HOLLOW_SPHERE,
+    SOLID_SPHERE,
+    count
+}
+
 public class Particle2D : MonoBehaviour
 {
+    /// <summary> The mass of the particle. </summary>
+    public float mass;
+    /// <summary> The local center of mass of the particle. </summary>
+    public Vector2 centerOfMass;
+    /// <summary> The moment of inertia of the particle. </summary>
+    public float inertia;
+
     /// <summary>
     /// The position, velocity, and acceleration of our particle.
     /// These control the positional movement of the particle during the update.
@@ -12,9 +30,7 @@ public class Particle2D : MonoBehaviour
     public Vector2 velocity;
     public Vector2 acceleration;
 
-    /// <summary> The mass of the particle. </summary>
-    public float mass;
-    /// <summary> The total sum of forces acting on the object. </summary>
+    /// <summary> The total sum of forces acting on the particle. </summary>
     public Vector2 force;
 
     /// <summary>
@@ -25,6 +41,9 @@ public class Particle2D : MonoBehaviour
     public float angularVelocity;
     public float angularAcceleration;
 
+    /// <summary> The total sum of torque acting on the particle. </summary>
+    public float torque;
+
     /// <summary>
     /// The method (either Explicit Euler or Kinematic) that has been selected for the particle's update
     /// </summary>
@@ -34,7 +53,7 @@ public class Particle2D : MonoBehaviour
     void Start()
     {
     }
-    
+
     // FixedUpdate is called at a regular interval
     void FixedUpdate()
     {
@@ -155,5 +174,21 @@ public class Particle2D : MonoBehaviour
     public void ApplyForce(Vector2 newForce)
     {
         force += newForce;
+    }
+
+    private void CalculateMomentOfInertia()
+    {
+        
+    }
+
+    private void UpdateAngularAccelearation()
+    {
+        angularAcceleration = (1 / inertia) * torque;
+    }
+
+    public void ApplyTorque(Vector2 forcePoint, float forceAmount)
+    {
+        float momentArm = Vector2.Distance(centerOfMass, forcePoint);
+        torque += momentArm * forceAmount;
     }
 }
