@@ -6,10 +6,7 @@ public enum Shape
 {
     ROD = 0,
     DISK,
-    THIN_CYLINDER,
-    SOLID_CYLINDER,
-    HOLLOW_SPHERE,
-    SOLID_SPHERE,
+    RECTANGLE,
     count
 }
 
@@ -21,6 +18,9 @@ public class Particle2D : MonoBehaviour
     public Vector2 centerOfMass;
     /// <summary> The moment of inertia of the particle. </summary>
     public float inertia;
+
+    /// <summary> The object's shape, determining moment of inertia. </summary>
+    public Shape shape;
 
     /// <summary>
     /// The position, velocity, and acceleration of our particle.
@@ -52,6 +52,7 @@ public class Particle2D : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        CalculateMomentOfInertia();
     }
 
     // FixedUpdate is called at a regular interval
@@ -80,6 +81,9 @@ public class Particle2D : MonoBehaviour
         // Update the particle's velocities
         UpdateVelocityEulerExplicit(Time.fixedDeltaTime);
         UpdateAngularVelocityEulerExplicit(Time.fixedDeltaTime);
+
+        // Update the particle's angular acceleration based on torque
+        UpdateAngularAccelearation();
 
         // Update the actual object's transform with our new values
         transform.position = position;
@@ -176,14 +180,31 @@ public class Particle2D : MonoBehaviour
         force += newForce;
     }
 
-    private void CalculateMomentOfInertia()
+    public void CalculateMomentOfInertia()
     {
-        
+        if (shape == Shape.DISK)
+        {
+            // Radius based on Y-scale
+            // I = (1/2)mr^2
+            inertia = .5f * mass * (transform.localScale.y * transform.localScale.y);
+        }
+        else if (shape == Shape.RECTANGLE)
+        {
+            // I = (1/12)m(d_x^2+d_y^2)
+            inertia = 0.083333f * mass * (transform.localScale.x * transform.localScale.x + transform.localScale.y * transform.localScale.y);
+        }
+        else if (shape == Shape.ROD)
+        {
+            // Length based on Y-scale
+            // I = (1/12)ml
+            inertia = 0.083333f * mass * transform.localScale.y;
+        }
     }
 
     private void UpdateAngularAccelearation()
     {
         angularAcceleration = (1 / inertia) * torque;
+        torque = 0.0f;
     }
 
     public void ApplyTorque(Vector2 forcePoint, float forceAmount)
