@@ -20,7 +20,7 @@ public abstract class CollisionHull2D : MonoBehaviour
         type = type_set;
     }
 
-    protected Particle2D particle;
+    public Particle2D particle;
 
     // Start is called before the first frame update
     void Start()

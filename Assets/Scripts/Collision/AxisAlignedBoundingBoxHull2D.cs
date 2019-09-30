@@ -7,6 +7,9 @@ public class AxisAlignedBoundingBoxHull2D : CollisionHull2D
 
     public AxisAlignedBoundingBoxHull2D() : base(CollisionHullType2D.AABB) { }
 
+    /// <summary> The dimensions of the box. </summary>
+    public Vector2 dimensions;
+
     // Start is called before the first frame update
     void Start()
     {
