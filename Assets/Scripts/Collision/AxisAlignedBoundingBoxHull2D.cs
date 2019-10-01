@@ -36,7 +36,21 @@ public class AxisAlignedBoundingBoxHull2D : CollisionHull2D
         // 3. B.X < A.X
         // 4. B.Y < A.Y
 
-        return false;
+        Vector2 pos = particle.position;
+        Vector2 otherPos = other.particle.position;
+        Vector2 otherDims = other.dimensions;
+        
+        if (pos.x < otherPos.x + otherDims.x      // 1
+            && pos.y < otherPos.y + otherDims.y   // 2
+            && otherPos.x < pos.x + dimensions.x  // 3
+            && otherPos.y < pos.y + dimensions.y) // 4
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public override bool TestCollisionVsOBB(ObjectBoundingBoxHull2D other)

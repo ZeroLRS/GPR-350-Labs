@@ -66,12 +66,12 @@ public class CircleCollisionHull2D : CollisionHull2D
         if (pos.x < otherPos.x)
         {
             // Circle is to the left of the box, so we use the left side of the box as our X
-            closestPoint.x = otherPos.x - otherDims.x * .5f;
+            closestPoint.x = otherPos.x;
         }
         else if (pos.x > otherPos.x + otherDims.x)
         {
             // Circle is to the right of the box, so we use the right side of the box as our X
-            closestPoint.x = otherPos.x + otherDims.x * .5f;
+            closestPoint.x = otherPos.x + otherDims.x;
         }
         else
         {
@@ -83,12 +83,12 @@ public class CircleCollisionHull2D : CollisionHull2D
         if (pos.y < otherPos.y)
         {
             // Circle is to the left of the box, so we use the left side of the box as our Y
-            closestPoint.y = otherPos.y - otherDims.y * .5f;
+            closestPoint.y = otherPos.y;
         }
         else if (pos.y > otherPos.y + otherDims.y)
         {
             // Circle is to the right of the box, so we use the right side of the box as our Y
-            closestPoint.y = otherPos.y + otherDims.y * .5f;
+            closestPoint.y = otherPos.y + otherDims.y;
         }
         else
         {
@@ -115,7 +115,7 @@ public class CircleCollisionHull2D : CollisionHull2D
     {
         // same as above, but first...
         // transform circle position by multiplying by box world matrix inverse
-
+        
         return false;
     }
 
