@@ -13,7 +13,8 @@ public class CircleCollisionHull2D : CollisionHull2D
     // Start is called before the first frame update
     void Start()
     {
-        
+        // Make the radius match up with Unity's scaling
+        radius *= 0.5f;
     }
 
     // Update is called once per frame
@@ -36,7 +37,8 @@ public class CircleCollisionHull2D : CollisionHull2D
         
         Vector2 otherPos = other.particle.position;
 
-        float distSq = Vector2.Dot(particle.position, otherPos);
+        Vector2 diff = particle.position - otherPos;
+        float distSq = Vector2.Dot(diff, diff);
 
         float sumSq = radius + other.radius;
         sumSq *= sumSq;
@@ -60,45 +62,24 @@ public class CircleCollisionHull2D : CollisionHull2D
         Vector2 otherPos = other.particle.position;
         Vector2 otherDims = other.dimensions;
 
+        // Because we are doing math from the center of the box, we need half of each dimension
+        otherDims *= 0.5f;
+
         Vector2 closestPoint = Vector2.zero;
 
-        // Closest point on x-axis
-        if (pos.x < otherPos.x)
-        {
-            // Circle is to the left of the box, so we use the left side of the box as our X
-            closestPoint.x = otherPos.x;
-        }
-        else if (pos.x > otherPos.x + otherDims.x)
-        {
-            // Circle is to the right of the box, so we use the right side of the box as our X
-            closestPoint.x = otherPos.x + otherDims.x;
-        }
-        else
-        {
-            // If both of the above cases fail, the x-axis of the center of the circle is inside of the box, so the position is the closest position
-            closestPoint.x = pos.x;
-        }
+        closestPoint.x = Mathf.Clamp(pos.x, otherPos.x - otherDims.x, otherPos.x + otherDims.x);
+        closestPoint.y = Mathf.Clamp(pos.y, otherPos.y - otherDims.y, otherPos.y + otherDims.y);
 
-        // Closest point on y-axis
-        if (pos.y < otherPos.y)
-        {
-            // Circle is to the left of the box, so we use the left side of the box as our Y
-            closestPoint.y = otherPos.y;
-        }
-        else if (pos.y > otherPos.y + otherDims.y)
-        {
-            // Circle is to the right of the box, so we use the right side of the box as our Y
-            closestPoint.y = otherPos.y + otherDims.y;
-        }
-        else
-        {
-            // If both of the above cases fail, the y-axis of the center of the circle is inside of the box, so the position is the closest position
-            closestPoint.y = pos.y;
-        }
+        Debug.Log("Closest point on " + other.gameObject.name + " to " + gameObject.name +" is: " + closestPoint);
 
         // If the box's closest point is inside the circle's radius, there is collision
-        float distSq = Vector2.Dot(pos, closestPoint);
+        Vector2 diff = pos - closestPoint;
+        float distSq = Vector2.Dot(diff, diff);
         float radiusSq = radius * radius;
+        Debug.Log("Diff: " + diff);
+        Debug.Log("distSq: " + distSq);
+        Debug.Log("radiusSq: " + radiusSq);
+
 
         // Using square distance and radius for less complex calculation
         if (distSq <= radiusSq)

@@ -36,9 +36,27 @@ public abstract class CollisionHull2D : MonoBehaviour
 
     public static bool TestCollision(CollisionHull2D a, CollisionHull2D b)
     {
-        // call the approprite collision test
+        bool collision = false;
 
-        return false;
+        if (b.type == CollisionHullType2D.CIRCLE)
+        {
+            collision = a.TestCollisionVsCircle((CircleCollisionHull2D)b);
+        }
+        else if (b.type == CollisionHullType2D.AABB)
+        {
+            collision = a.TestCollisionVsAABB((AxisAlignedBoundingBoxHull2D)b);
+        }
+        else if (b.type == CollisionHullType2D.OBB)
+        {
+            collision = a.TestCollisionVsOBB((ObjectBoundingBoxHull2D)b);
+        }
+
+        if (collision)
+        {
+            Debug.Log("Collision: " + a.gameObject.name + " and " + b.gameObject.name);
+        }
+
+        return collision;
     }
 
     public abstract bool TestCollisionVsCircle(CircleCollisionHull2D other);
